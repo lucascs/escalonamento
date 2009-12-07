@@ -1,11 +1,15 @@
-package ceci.lucas.gold;
+package ceci.lucas.gold.escalonador;
 
 import java.util.Iterator;
 import java.util.List;
 
+import ceci.lucas.gold.Escalonamento;
+import ceci.lucas.gold.Main;
+import ceci.lucas.gold.Programa;
+
 /**
  * Pelo menos um comercial depois do programa
- *
+ * 
  */
 public class ComComerciais implements Escalonador {
 
@@ -15,22 +19,25 @@ public class ComComerciais implements Escalonador {
 		this.escalonador = escalonador;
 	}
 
-	public List<List<Programa>> escalona(List<Programa> periodo) {
-		// aumenta a duração de todos os programas para ter pelo menos um comercial
+	public Escalonamento escalona(List<Programa> periodo) {
+		// aumenta a duração de todos os programas para ter pelo menos um
+		// comercial
 		for (Programa programa : periodo) {
 			programa.setPj(programa.getPj() + 1);
 		}
 
-		List<List<Programa>> resultado = escalonador.escalona(periodo);
+		Escalonamento resultado = escalonador.escalona(periodo);
 
 		for (Programa programa : periodo) {
 			programa.setPj(programa.getPj() - 1);
 		}
 
-		for (List<Programa> dia : resultado) {
+		for(int i = 0; i < resultado.numeroDias(); i++) {
+			List<Programa> dia = resultado.getDia(i);
 			int restante = calculaTempoRestante(dia);
 
-			int duracaoComercial = restante/dia.size(); //arredondado pra baixo
+			int duracaoComercial = restante / dia.size(); // arredondado pra
+															// baixo
 
 			if (duracaoComercial > 0) {
 				for (Programa programa : dia) {
@@ -45,7 +52,7 @@ public class ComComerciais implements Escalonador {
 			Iterator<Programa> iterator = dia.iterator();
 			while (restante > 0 && iterator.hasNext()) {
 				iterator.next().setComerciais(1);
-				restante --;
+				restante--;
 			}
 
 		}

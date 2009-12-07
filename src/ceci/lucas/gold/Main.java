@@ -1,8 +1,12 @@
 package ceci.lucas.gold;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import ceci.lucas.gold.escalonador.ComComerciais;
+import ceci.lucas.gold.escalonador.Escalonador;
+import ceci.lucas.gold.escalonador.SolucaoIngenua;
 
 public class Main {
 
@@ -24,9 +28,9 @@ public class Main {
 
 		Escalonador escalonador = new ComComerciais(new SolucaoIngenua());
 
-		List<List<Programa>> escalonadoManha = escalonador.escalona(manha);
-		List<List<Programa>> escalonadoTarde = escalonador.escalona(tarde);
-		List<List<Programa>> escalonadoNoite = escalonador.escalona(noite);
+		Escalonamento escalonadoManha = escalonador.escalona(manha);
+		Escalonamento escalonadoTarde = escalonador.escalona(tarde);
+		Escalonamento escalonadoNoite = escalonador.escalona(noite);
 
 		int maior = maior(escalonadoManha, escalonadoTarde, escalonadoNoite);
 		System.out.println("Estratégia: " + escalonador);
@@ -53,10 +57,10 @@ public class Main {
 		System.out.println("p -> comercial da polishop");
 	}
 
-	private static void grafico(List<List<Programa>> escalonado, int i) {
+	private static void grafico(Escalonamento escalonado, int i) {
 		int restantes = MAXIMO_DE_TEMPO;
-		if (escalonado.size() > i) {
-			for (Programa programa : escalonado.get(i)) {
+		if (escalonado.numeroDias() > i) {
+			for (Programa programa : escalonado.getDia(i)) {
 				repete('x', programa.getPj());
 				repete('c', programa.getComerciais());
 				restantes -= programa.getDuracao();
@@ -65,37 +69,32 @@ public class Main {
 		repete('p', restantes);
 	}
 
-
-
 	private static void repete(char c, int pj) {
 		for (int i = 0; i < pj; i++) {
 			System.out.append(c);
 		}
 	}
 
-	private static void imprime(List<List<Programa>> escalonado, int dia) {
-		if (escalonado.size() > dia) {
-			System.out.print(escalonado.get(dia));
+	private static void imprime(Escalonamento escalonado, int dia) {
+		if (escalonado.numeroDias() > dia) {
+			System.out.print(escalonado.getDia(dia));
 		} else {
 			System.out.print("[]");
 		}
 	}
 
-	private static int maior(List<List<Programa>> escalonadoManha, List<List<Programa>> escalonadoTarde,
-			List<List<Programa>> escalonadoNoite) {
-		return Math.max(Math.max(escalonadoManha.size(), escalonadoTarde.size()), escalonadoNoite.size());
+	private static int maior(Escalonamento escalonadoManha, Escalonamento escalonadoTarde,
+			Escalonamento escalonadoNoite) {
+		return Math.max(Math.max(escalonadoManha.numeroDias(), escalonadoTarde.numeroDias()), escalonadoNoite.numeroDias());
 	}
 
 	private static List<Programa> leProgramas(Scanner teclado) {
 		List<Programa> programas = new ArrayList<Programa>();
 		int n = teclado.nextInt();
-		for (int i = 0; i < n; i++) {
-			programas.add(new Programa(count++));
-		}
-
 		System.out.println("Digite os pj's (unidades de meia hora):");
 		for (int i = 0; i < n; i++) {
-			programas.get(i).setPj(teclado.nextInt());
+			int pj = teclado.nextInt();
+			programas.add(new Programa(pj));
 		}
 		return programas;
 	}

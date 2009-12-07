@@ -10,10 +10,16 @@ public class Programa {
 
 	private int comerciais;
 
-	private final int index;
+	private final int indice;
+	private static int contagemGeralIndice = 0;
 
-	public Programa(int index) {
-		this.index = index;
+	private static int pegaIndice() {
+		return contagemGeralIndice++;
+	}
+	
+	public Programa(int pj) {
+		this.indice = pegaIndice();
+		this.pj = pj;
 	}
 
 	public int getComerciais() {
@@ -50,7 +56,7 @@ public class Programa {
 
 	@Override
 	public String toString() {
-		return "[" + index + "]";
+		return "[" + indice + "]";
 	}
 
 	public int getDuracao() {

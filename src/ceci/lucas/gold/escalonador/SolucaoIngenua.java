@@ -1,22 +1,27 @@
-package ceci.lucas.gold;
+package ceci.lucas.gold.escalonador;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import ceci.lucas.gold.Escalonamento;
+import ceci.lucas.gold.Main;
+import ceci.lucas.gold.Programa;
 
 /**
  * tenta encaixar o máximo de programas possível dentro de um período
  */
 public class SolucaoIngenua implements Escalonador {
 
-	public List<List<Programa>> escalona(List<Programa> periodo) {
+	public Escalonamento escalona(List<Programa> periodo) {
 		List<List<Programa>> escalonado = new ArrayList<List<Programa>>();
 		List<Programa> todos = new ArrayList<Programa>(periodo);
 
-		while(!todos.isEmpty()) {
+		while (!todos.isEmpty()) {
 			int restante = Main.MAXIMO_DE_TEMPO;
 			List<Programa> dia = new ArrayList<Programa>();
 			Iterator<Programa> iterator = todos.iterator();
-			while(iterator.hasNext() && restante > 0) {
+			while (iterator.hasNext() && restante > 0) {
 				Programa programa = iterator.next();
 				if (programa.getPj() <= restante) {
 					iterator.remove();
@@ -26,7 +31,7 @@ public class SolucaoIngenua implements Escalonador {
 			}
 			escalonado.add(dia);
 		}
-		return escalonado;
+		return new Escalonamento(escalonado);
 	}
 
 	@Override
