@@ -10,13 +10,14 @@ public class Escalonamento {
 	public Escalonamento(List<List<Programa>> escalonamento) {
 		this.escalonamento = escalonamento;
 	}
-	
+
 	public List<Programa> getDia(int dia){
-		if(dia < escalonamento.size())
-			return escalonamento.get(dia - 1);
+		if(dia < escalonamento.size()) {
+			return escalonamento.get(dia);
+		}
 		return Collections.emptyList();
 	}
-	
+
 	public int numeroDias() {
 		return escalonamento.size();
 	}
