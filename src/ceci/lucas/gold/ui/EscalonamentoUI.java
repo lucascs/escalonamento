@@ -1,5 +1,8 @@
 package ceci.lucas.gold.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,19 +16,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ceci.lucas.gold.Programa;
+import ceci.lucas.gold.escalonador.ComComerciais;
+import ceci.lucas.gold.escalonador.SolucaoIngenua;
 import ceci.lucas.gold.leitor.LeitorEntrada;
 
 public class EscalonamentoUI {
 
 	private JFrame janelaPrincipal;
 	private JPanel painelPrincipal;
+	private Container painelBotoes;
+
+	public static void main(String[] args) {
+		new EscalonamentoUI().montaTela();
+	}
 
 	public void montaTela() {
 		montaJanelaPrincipal();
 		montaPainelPrincipal();
+		montaPainelBotoes();
 		montaBotaoCarregar();
-		montaBotaoEscalonar();
-		montaGrafico();
+		montaBotaoSair();
 		mostraTudo();
 	}
 
@@ -36,38 +46,56 @@ public class EscalonamentoUI {
 
 	private void montaPainelPrincipal() {
 		painelPrincipal = new JPanel();
-		janelaPrincipal.add(janelaPrincipal);
+		painelPrincipal.setLayout(new BorderLayout());
+		janelaPrincipal.add(painelPrincipal);
 	}
-	
+
+	private void montaPainelBotoes() {
+		painelBotoes = new JPanel();
+		painelBotoes.setLayout(new GridLayout());
+		painelPrincipal.add(painelBotoes, BorderLayout.SOUTH);
+	}
+
 	private void montaBotaoCarregar() {
-		JButton botaoCarregar = new JButton();
+		JButton botaoCarregar = new JButton("Carregar Entrada");
 		botaoCarregar.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileChooser = new JFileChooser(".");
-				File file = fileChooser.getSelectedFile();
-				try {
-					List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
-					new Plotter(todosProgramas);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+				int retorno = fileChooser.showOpenDialog(null);
+
+				if (retorno == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					try {
+						List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
+						Plotter plotter = new Plotter(todosProgramas);
+						plotter.criaGrafico("Escalonamento");
+						plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+						JPanel panel = plotter.getPanel();
+						painelPrincipal.add(panel, BorderLayout.CENTER);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
+		painelBotoes.add(botaoCarregar);
 	}
 
-	private void montaBotaoEscalonar() {
-		// TODO Auto-generated method stub
-		
-	}
+	private void montaBotaoSair() {
+		JButton botaoSair = new JButton("Sair");
+		botaoSair.addActionListener(new ActionListener() {
 
-	private void montaGrafico() {
-		// TODO Auto-generated method stub
-		
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		painelBotoes.add(botaoSair);
 	}
 
 	private void mostraTudo() {
-		// TODO Auto-generated method stub
-		
+		janelaPrincipal.pack();
+		janelaPrincipal.setSize(700, 550);
+		janelaPrincipal.setVisible(true);
 	}
 }

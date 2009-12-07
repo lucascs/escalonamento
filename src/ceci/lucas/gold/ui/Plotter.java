@@ -3,9 +3,14 @@ package ceci.lucas.gold.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
+
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.GroupedStackedBarRenderer;
+import org.jfree.data.KeyToGroupMap;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import ceci.lucas.gold.Escalonamento;
@@ -38,14 +43,25 @@ public class Plotter {
 			periodos.add(escalonador.escalona(programasPeriodo));
 		}
 		
+		KeyToGroupMap map = new KeyToGroupMap();
 		for (Escalonamento periodo : periodos) {
 			for(int i = 0; i < periodo.numeroDias(); i++) {
 				List<Programa> dia = periodo.getDia(i);
 				for (Programa programa : dia) {
-					dataset.addValue(programa.getDuracao(), dia.toString(), Integer.valueOf(i));
+					dataset.addValue(programa.getDuracao(), "linha " + i, Integer.valueOf(programa.getInicio()));
+					
 				}
+				map.mapKeyToGroup("linha " + i,	i);
 			}
 		}
+
+		GroupedStackedBarRenderer renderer = new GroupedStackedBarRenderer();
+		renderer.setSeriesToGroupMap(map);
+		
 		// Falta separar programas por cores...
+	}
+
+	public JPanel getPanel(){
+		return new ChartPanel(this.grafico);
 	}
 }
