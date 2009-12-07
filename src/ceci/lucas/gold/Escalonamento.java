@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Escalonamento {
 
-	List<List<Programa>> escalonamento;
+	private final List<List<Programa>> escalonamento;
 
 	public Escalonamento(List<List<Programa>> escalonamento) {
 		this.escalonamento = escalonamento;
@@ -20,4 +20,5 @@ public class Escalonamento {
 	public int numeroDias() {
 		return escalonamento.size();
 	}
+
 }

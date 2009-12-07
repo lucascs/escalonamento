@@ -1,5 +1,6 @@
 package ceci.lucas.gold.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
@@ -32,9 +33,19 @@ public class Plotter {
 	}
 	
 	public void plotaIndicador(Escalonador indicador){
+		List<Escalonamento> periodos = new ArrayList<Escalonamento>();
 		for (List<Programa> programasPeriodo : todosProgramas) {
-			Escalonamento escalonamento = escalonador.escalona(programasPeriodo);
+			periodos.add(escalonador.escalona(programasPeriodo));
 		}
-		// Falta plotar...
+		
+		for (Escalonamento periodo : periodos) {
+			for(int i = 0; i < periodo.numeroDias(); i++) {
+				List<Programa> dia = periodo.getDia(i);
+				for (Programa programa : dia) {
+					dataset.addValue(programa.getDuracao(), dia.toString(), Integer.valueOf(i));
+				}
+			}
+		}
+		// Falta separar programas por cores...
 	}
 }
