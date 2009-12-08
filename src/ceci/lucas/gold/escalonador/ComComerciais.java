@@ -9,7 +9,7 @@ import ceci.lucas.gold.VariaveisMagicas;
 
 /**
  * Pelo menos um comercial depois do programa
- * 
+ *
  */
 public class ComComerciais implements Escalonador {
 
@@ -51,11 +51,10 @@ public class ComComerciais implements Escalonador {
 
 			Iterator<Programa> iterator = dia.iterator();
 			while (restante > 0 && iterator.hasNext()) {
-				iterator.next().setComerciais(1);
+				Programa programa = iterator.next();
+				programa.setComerciais(programa.getComerciais() + 1);
 				restante--;
 			}
-			if(restante != 0) System.out.println("Restante = " + restante);
-			dia.get(0).setComerciais(dia.get(0).getComerciais() + restante);
 		}
 		return resultado;
 	}
