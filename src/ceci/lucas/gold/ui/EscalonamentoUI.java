@@ -11,9 +11,14 @@ import java.io.FileReader;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 
 import ceci.lucas.gold.Programa;
@@ -27,6 +32,10 @@ public class EscalonamentoUI {
 	private JPanel painelPrincipal;
 	private Container painelBotoes;
 	private JTabbedPane abas;
+	private JRadioButtonMenuItem nextFit;
+	private JRadioButtonMenuItem bestFit;
+	private JRadioButtonMenuItem worstFit;
+	private JMenuItem firstFit;
 
 	public static void main(String[] args) {
 		new EscalonamentoUI().montaTela();
@@ -34,6 +43,7 @@ public class EscalonamentoUI {
 
 	public void montaTela() {
 		montaJanelaPrincipal();
+		montaMenu();
 		montaPainelPrincipal();
 		montaPainelBotoes();
 		montaBotaoCarregar();
@@ -47,6 +57,26 @@ public class EscalonamentoUI {
 		janelaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	private void montaMenu() {
+		JMenuBar menuBar = new JMenuBar();
+		janelaPrincipal.setJMenuBar(menuBar);
+		
+		JMenu menuOpcoes = new JMenu("Heurísticas");
+		menuBar.add(menuOpcoes);
+		
+		firstFit = new JRadioButtonMenuItem("First Fit");
+		menuOpcoes.add(firstFit);
+
+		nextFit = new JRadioButtonMenuItem("Next Fit");
+		menuOpcoes.add(nextFit);
+		
+		bestFit = new JRadioButtonMenuItem("Best Fit");
+		menuOpcoes.add(bestFit);
+
+		worstFit = new JRadioButtonMenuItem("Worst Fit");
+		menuOpcoes.add(worstFit);
+	}
+	
 	private void montaPainelPrincipal() {
 		painelPrincipal = new JPanel();
 		painelPrincipal.setLayout(new BorderLayout());
@@ -70,12 +100,7 @@ public class EscalonamentoUI {
 				if (retorno == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
 					try {
-						List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
-						Plotter plotter = new Plotter(todosProgramas);
-						plotter.plotaIndicador(new ComComerciais(new FirstFit()));
-						plotter.criaGrafico("Escalonamento");
-						JPanel panel = plotter.getPanel();
-						abas.addTab("Escalonamento", panel);
+						escalonaEPlota(file);
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -85,6 +110,15 @@ public class EscalonamentoUI {
 		painelBotoes.add(botaoCarregar);
 	}
 
+	private void escalonaEPlota(File file) throws FileNotFoundException {
+		List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
+		Plotter plotter = new Plotter(todosProgramas);
+		plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+		plotter.criaGrafico("Escalonamento");
+		JPanel panel = plotter.getPanel();
+		abas.addTab("Escalonamento", panel);
+	}
+	
 	private void montaBotaoSair() {
 		JButton botaoSair = new JButton("Sair");
 		botaoSair.addActionListener(new ActionListener() {
