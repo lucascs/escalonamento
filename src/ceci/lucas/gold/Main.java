@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.io.output.NullOutputStream;
 
+import ceci.lucas.gold.escalonador.BestFit;
 import ceci.lucas.gold.escalonador.ComComerciais;
 import ceci.lucas.gold.escalonador.Escalonador;
+import ceci.lucas.gold.escalonador.FirstFit;
+import ceci.lucas.gold.escalonador.NextFit;
 import ceci.lucas.gold.escalonador.WorstFit;
 
 public class Main {
@@ -42,30 +46,32 @@ public class Main {
 		dicas.println("Digite o número de programas de noite:");
 		List<Programa> noite = leProgramas(teclado, dicas);
 
-		Escalonador escalonador = new ComComerciais(new WorstFit());
 
-		Escalonamento escalonadoManha = escalonador.escalona(manha);
-		Escalonamento escalonadoTarde = escalonador.escalona(tarde);
-		Escalonamento escalonadoNoite = escalonador.escalona(noite);
+		for (Escalonador heuristica : Arrays.asList(new NextFit(), new BestFit(), new WorstFit(), new FirstFit())) {
+			Escalonador escalonador = new ComComerciais(heuristica);
+			Escalonamento escalonadoManha = escalonador.escalona(manha);
+			Escalonamento escalonadoTarde = escalonador.escalona(tarde);
+			Escalonamento escalonadoNoite = escalonador.escalona(noite);
 
-		int maior = maior(escalonadoManha, escalonadoTarde, escalonadoNoite);
-		saida.println("Estratégia: " + escalonador);
-		for (int i = 0; i < maior; i++) {
-			saida.println("Dia " + (i + 1) + ":");
-			saida.print("Manha ");
-			imprime(escalonadoManha, i, saida);
-			saida.print(" Tarde ");
-			imprime(escalonadoTarde, i, saida);
-			saida.print(" Noite ");
-			imprime(escalonadoNoite, i, saida);
-			saida.println();
-			saida.append('[');
-			grafico(escalonadoManha, i, saida);
-			saida.append('|');
-			grafico(escalonadoTarde, i, saida);
-			saida.append('|');
-			grafico(escalonadoNoite, i, saida);
-			saida.println("]");
+			int maior = maior(escalonadoManha, escalonadoTarde, escalonadoNoite);
+			saida.println("Estratégia: " + escalonador);
+			for (int i = 0; i < maior; i++) {
+				saida.println("Dia " + (i + 1) + ":");
+				saida.print("Manha ");
+				imprime(escalonadoManha, i, saida);
+				saida.print(" Tarde ");
+				imprime(escalonadoTarde, i, saida);
+				saida.print(" Noite ");
+				imprime(escalonadoNoite, i, saida);
+				saida.println();
+				saida.append('[');
+				grafico(escalonadoManha, i, saida);
+				saida.append('|');
+				grafico(escalonadoTarde, i, saida);
+				saida.append('|');
+				grafico(escalonadoNoite, i, saida);
+				saida.println("]");
+			}
 		}
 		saida.println("Legenda: ");
 		saida.println("x -> parte de um programa");

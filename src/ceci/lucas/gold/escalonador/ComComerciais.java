@@ -50,10 +50,16 @@ public class ComComerciais implements Escalonador {
 			restante -= duracaoComercial * dia.size();
 
 			Iterator<Programa> iterator = dia.iterator();
-			while (restante > 0 && iterator.hasNext()) {
+			while (restante > 0) {
+				if (!iterator.hasNext()) {
+					iterator = dia.iterator();
+				}
 				Programa programa = iterator.next();
 				programa.setComerciais(programa.getComerciais() + 1);
 				restante--;
+			}
+			if (restante != 0) {
+				throw new RuntimeException(restante + "!!!");
 			}
 		}
 		return resultado;
@@ -62,7 +68,7 @@ public class ComComerciais implements Escalonador {
 	private int calculaTempoRestante(List<Programa> dia) {
 		int restante = VariaveisMagicas.MAXIMO_DE_TEMPO;
 		for (Programa programa : dia) {
-			restante -= programa.getDuracao();
+			restante -= programa.getPj();
 		}
 		return restante;
 	}
