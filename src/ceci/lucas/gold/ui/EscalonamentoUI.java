@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import ceci.lucas.gold.Programa;
 import ceci.lucas.gold.escalonador.ComComerciais;
@@ -25,6 +26,7 @@ public class EscalonamentoUI {
 	private JFrame janelaPrincipal;
 	private JPanel painelPrincipal;
 	private Container painelBotoes;
+	private JTabbedPane abas;
 
 	public static void main(String[] args) {
 		new EscalonamentoUI().montaTela();
@@ -36,6 +38,7 @@ public class EscalonamentoUI {
 		montaPainelBotoes();
 		montaBotaoCarregar();
 		montaBotaoSair();
+		montaAbas();
 		mostraTudo();
 	}
 
@@ -48,18 +51,6 @@ public class EscalonamentoUI {
 		painelPrincipal = new JPanel();
 		painelPrincipal.setLayout(new BorderLayout());
 		janelaPrincipal.add(painelPrincipal);
-		
-			File file = new File("teste.txt");
-			try {
-				List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
-				Plotter plotter = new Plotter(todosProgramas);
-				plotter.plotaIndicador(new ComComerciais(new FirstFit()));
-				plotter.criaGrafico("Escalonamento");
-				JPanel panel = plotter.getPanel();
-				painelPrincipal.add(panel, BorderLayout.CENTER);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
 	}
 
 	private void montaPainelBotoes() {
@@ -84,7 +75,7 @@ public class EscalonamentoUI {
 						plotter.plotaIndicador(new ComComerciais(new FirstFit()));
 						plotter.criaGrafico("Escalonamento");
 						JPanel panel = plotter.getPanel();
-						painelPrincipal.add(panel, BorderLayout.CENTER);
+						abas.addTab("Escalonamento", panel);
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -105,6 +96,11 @@ public class EscalonamentoUI {
 		painelBotoes.add(botaoSair);
 	}
 
+	private void montaAbas(){
+		abas = new JTabbedPane();
+		painelPrincipal.add(abas);
+	}
+	
 	private void mostraTudo() {
 		janelaPrincipal.pack();
 		janelaPrincipal.setSize(700, 550);
