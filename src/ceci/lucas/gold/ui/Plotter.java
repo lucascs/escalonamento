@@ -15,50 +15,67 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import ceci.lucas.gold.Escalonamento;
 import ceci.lucas.gold.Programa;
+import ceci.lucas.gold.VariaveisMagicas;
 import ceci.lucas.gold.escalonador.Escalonador;
 
 public class Plotter {
 
 	private List<List<Programa>> todosProgramas;
-	private Escalonador escalonador;
 
 	private DefaultCategoryDataset dataset;
 	private JFreeChart grafico;
+
+	private GroupedStackedBarRenderer renderer;
 	
 	public Plotter(List<List<Programa>> todosProgramas) {
 		this.todosProgramas = todosProgramas;
 	}
 
 	public void criaGrafico(String titulo){
-		this.dataset = new DefaultCategoryDataset();
-		this.grafico = 
-			ChartFactory.createStackedBarChart("Escalonamento",
+		this.grafico = ChartFactory.createStackedBarChart("Escalonamento",
 												"Dias", "Horarios", 
-				dataset, PlotOrientation.VERTICAL, true, true, false);
+				dataset, PlotOrientation.HORIZONTAL, false, true, true);
 	}
 	
-	public void plotaIndicador(Escalonador indicador){
+	public void plotaIndicador(Escalonador escalonador){
+		this.dataset = new DefaultCategoryDataset();
 		List<Escalonamento> periodos = new ArrayList<Escalonamento>();
 		for (List<Programa> programasPeriodo : todosProgramas) {
 			periodos.add(escalonador.escalona(programasPeriodo));
 		}
 		
 		KeyToGroupMap map = new KeyToGroupMap();
+		
+		int maiorPeriodo = 0;
 		for (Escalonamento periodo : periodos) {
-			for(int i = 0; i < periodo.numeroDias(); i++) {
+			if(periodo.numeroDias() > maiorPeriodo)
+				maiorPeriodo = periodo.numeroDias();
+		}
+		System.out.println("Maior período = " + maiorPeriodo);
+		for (Escalonamento periodo : periodos) {
+			int i = 0;
+			for(i = 0; i < periodo.numeroDias(); i++) {
 				List<Programa> dia = periodo.getDia(i);
 				for (Programa programa : dia) {
-					dataset.addValue(programa.getDuracao(), "linha " + i, Integer.valueOf(programa.getInicio()));
-					
+					dataset.addValue(programa.getPj(), "Programa " + programa.getIndice(), Integer.valueOf(i));
+					dataset.addValue(programa.getComerciais(), "Comerciais " + programa.getIndice(), Integer.valueOf(i));
+					map.mapKeyToGroup(programa.toString(),	i);
 				}
-				map.mapKeyToGroup("linha " + i,	i);
+				
+			}
+			System.out.println("i = " + i);
+			while(maiorPeriodo > i) {
+				double random = Math.random();
+				System.out.println("Passei aqui!");
+				dataset.addValue(VariaveisMagicas.MAXIMO_DE_TEMPO, "Polishop " + random, Integer.valueOf(i));
+				map.mapKeyToGroup("Polishop " + random, i++);
 			}
 		}
 
-		GroupedStackedBarRenderer renderer = new GroupedStackedBarRenderer();
+		renderer = new GroupedStackedBarRenderer();
 		renderer.setSeriesToGroupMap(map);
 		
-		// Falta separar programas por cores...
+		
 	}
 
 	public JPanel getPanel(){

@@ -16,7 +16,6 @@ import ceci.lucas.gold.escalonador.SolucaoIngenua;
 
 public class Main {
 
-	public static final int MAXIMO_DE_TEMPO = 12;
 
 	public static void main(String[] args) throws IOException {
 		InputStream entrada = System.in;
@@ -75,7 +74,7 @@ public class Main {
 	}
 
 	private static void grafico(Escalonamento escalonado, int i, PrintStream saida) {
-		int restantes = MAXIMO_DE_TEMPO;
+		int restantes = VariaveisMagicas.MAXIMO_DE_TEMPO;
 		if (escalonado.numeroDias() > i) {
 			for (Programa programa : escalonado.getDia(i)) {
 				repete('x', programa.getPj(), saida);

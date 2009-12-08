@@ -48,6 +48,18 @@ public class EscalonamentoUI {
 		painelPrincipal = new JPanel();
 		painelPrincipal.setLayout(new BorderLayout());
 		janelaPrincipal.add(painelPrincipal);
+		
+			File file = new File("teste.txt");
+			try {
+				List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
+				Plotter plotter = new Plotter(todosProgramas);
+				plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+				plotter.criaGrafico("Escalonamento");
+				JPanel panel = plotter.getPanel();
+				painelPrincipal.add(panel, BorderLayout.CENTER);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 	}
 
 	private void montaPainelBotoes() {
@@ -69,8 +81,8 @@ public class EscalonamentoUI {
 					try {
 						List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
 						Plotter plotter = new Plotter(todosProgramas);
-						plotter.criaGrafico("Escalonamento");
 						plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+						plotter.criaGrafico("Escalonamento");
 						JPanel panel = plotter.getPanel();
 						painelPrincipal.add(panel, BorderLayout.CENTER);
 					} catch (FileNotFoundException e) {

@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import ceci.lucas.gold.Escalonamento;
-import ceci.lucas.gold.Main;
 import ceci.lucas.gold.Programa;
+import ceci.lucas.gold.VariaveisMagicas;
 
 /**
  * Pelo menos um comercial depois do programa
@@ -60,7 +60,7 @@ public class ComComerciais implements Escalonador {
 	}
 
 	private int calculaTempoRestante(List<Programa> dia) {
-		int restante = Main.MAXIMO_DE_TEMPO;
+		int restante = VariaveisMagicas.MAXIMO_DE_TEMPO;
 		for (Programa programa : dia) {
 			restante -= programa.getDuracao();
 		}

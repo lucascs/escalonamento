@@ -12,8 +12,6 @@ public class Programa {
 
 	private final int indice;
 
-	private int inicio;
-	
 	private static int contagemGeralIndice = 0;
 
 	private static int pegaIndice() {
@@ -66,7 +64,7 @@ public class Programa {
 		return pj + comerciais;
 	}
 
-	public int getInicio() {
-		return this.inicio;
+	public int getIndice() {
+		return this.indice;
 	}
 }
