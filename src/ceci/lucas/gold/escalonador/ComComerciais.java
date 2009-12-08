@@ -54,7 +54,8 @@ public class ComComerciais implements Escalonador {
 				iterator.next().setComerciais(1);
 				restante--;
 			}
-
+			if(restante != 0) System.out.println("Restante = " + restante);
+			dia.get(0).setComerciais(dia.get(0).getComerciais() + restante);
 		}
 		return resultado;
 	}

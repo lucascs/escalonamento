@@ -51,7 +51,6 @@ public class Plotter {
 			if(periodo.numeroDias() > maiorPeriodo)
 				maiorPeriodo = periodo.numeroDias();
 		}
-		System.out.println("Maior período = " + maiorPeriodo);
 		for (Escalonamento periodo : periodos) {
 			int i = 0;
 			for(i = 0; i < periodo.numeroDias(); i++) {
@@ -63,10 +62,8 @@ public class Plotter {
 				}
 				
 			}
-			System.out.println("i = " + i);
 			while(maiorPeriodo > i) {
 				double random = Math.random();
-				System.out.println("Passei aqui!");
 				dataset.addValue(VariaveisMagicas.MAXIMO_DE_TEMPO, "Polishop " + random, Integer.valueOf(i));
 				map.mapKeyToGroup("Polishop " + random, i++);
 			}
