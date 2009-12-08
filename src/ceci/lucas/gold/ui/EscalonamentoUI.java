@@ -22,8 +22,12 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 
 import ceci.lucas.gold.Programa;
+import ceci.lucas.gold.escalonador.BestFit;
 import ceci.lucas.gold.escalonador.ComComerciais;
+import ceci.lucas.gold.escalonador.Escalonador;
 import ceci.lucas.gold.escalonador.FirstFit;
+import ceci.lucas.gold.escalonador.NextFit;
+import ceci.lucas.gold.escalonador.WorstFit;
 import ceci.lucas.gold.leitor.LeitorEntrada;
 
 public class EscalonamentoUI {
@@ -113,12 +117,24 @@ public class EscalonamentoUI {
 	private void escalonaEPlota(File file) throws FileNotFoundException {
 		List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
 		Plotter plotter = new Plotter(todosProgramas);
-		plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+		plotter.plotaIndicador(new ComComerciais(escolheEscalonador()));
 		plotter.criaGrafico("Escalonamento");
 		JPanel panel = plotter.getPanel();
 		abas.addTab("Escalonamento", panel);
 	}
 	
+	private Escalonador escolheEscalonador() {
+		if(firstFit.isSelected())
+			return new FirstFit();
+		if(nextFit.isSelected())
+			return new NextFit();
+		if(bestFit.isSelected())
+			return new BestFit();
+		if(worstFit.isSelected())
+			return new WorstFit();
+		return new FirstFit();
+	}
+
 	private void montaBotaoSair() {
 		JButton botaoSair = new JButton("Sair");
 		botaoSair.addActionListener(new ActionListener() {
