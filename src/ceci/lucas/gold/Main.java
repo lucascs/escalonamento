@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 import org.apache.commons.io.output.NullOutputStream;
 
+import ceci.lucas.gold.escalonador.BestFit;
 import ceci.lucas.gold.escalonador.ComComerciais;
 import ceci.lucas.gold.escalonador.Escalonador;
-import ceci.lucas.gold.escalonador.SolucaoIngenua;
 
 public class Main {
 
@@ -42,7 +42,7 @@ public class Main {
 		dicas.println("Digite o número de programas de noite:");
 		List<Programa> noite = leProgramas(teclado, dicas);
 
-		Escalonador escalonador = new ComComerciais(new SolucaoIngenua());
+		Escalonador escalonador = new ComComerciais(new BestFit());
 
 		Escalonamento escalonadoManha = escalonador.escalona(manha);
 		Escalonamento escalonadoTarde = escalonador.escalona(tarde);

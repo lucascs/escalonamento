@@ -11,7 +11,7 @@ import ceci.lucas.gold.VariaveisMagicas;
 /**
  * tenta encaixar o máximo de programas possível dentro de um período
  */
-public class SolucaoIngenua implements Escalonador {
+public class NextFit implements Escalonador {
 
 	public Escalonamento escalona(List<Programa> periodo) {
 		List<List<Programa>> escalonado = new ArrayList<List<Programa>>();

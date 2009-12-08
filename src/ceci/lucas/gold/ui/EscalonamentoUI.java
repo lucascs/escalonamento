@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 import ceci.lucas.gold.Programa;
 import ceci.lucas.gold.escalonador.ComComerciais;
-import ceci.lucas.gold.escalonador.SolucaoIngenua;
+import ceci.lucas.gold.escalonador.FirstFit;
 import ceci.lucas.gold.leitor.LeitorEntrada;
 
 public class EscalonamentoUI {
@@ -53,7 +53,7 @@ public class EscalonamentoUI {
 			try {
 				List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
 				Plotter plotter = new Plotter(todosProgramas);
-				plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+				plotter.plotaIndicador(new ComComerciais(new FirstFit()));
 				plotter.criaGrafico("Escalonamento");
 				JPanel panel = plotter.getPanel();
 				painelPrincipal.add(panel, BorderLayout.CENTER);
@@ -81,7 +81,7 @@ public class EscalonamentoUI {
 					try {
 						List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
 						Plotter plotter = new Plotter(todosProgramas);
-						plotter.plotaIndicador(new ComComerciais(new SolucaoIngenua()));
+						plotter.plotaIndicador(new ComComerciais(new FirstFit()));
 						plotter.criaGrafico("Escalonamento");
 						JPanel panel = plotter.getPanel();
 						painelPrincipal.add(panel, BorderLayout.CENTER);
