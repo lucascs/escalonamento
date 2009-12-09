@@ -7,7 +7,7 @@ public class Programa {
 	private int dj;
 
 	private int rj;
-
+	
 	private int comerciais;
 
 	private final int indice;

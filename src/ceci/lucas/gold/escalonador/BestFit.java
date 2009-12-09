@@ -7,7 +7,7 @@ import ceci.lucas.gold.Escalonamento;
 import ceci.lucas.gold.Programa;
 import ceci.lucas.gold.VariaveisMagicas;
 
-/**
+/** 
  * encaixa no primeiro que sobra o mínimo de tempo
  */
 public class BestFit implements Escalonador {
