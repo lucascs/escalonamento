@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ceci.lucas.gold.Programa;
 import ceci.lucas.gold.escalonador.BestFit;
@@ -63,23 +65,39 @@ public class EscalonamentoUI {
 	private void montaMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		janelaPrincipal.setJMenuBar(menuBar);
-		
-		JMenu menuOpcoes = new JMenu("Heurísticas");
+
+		final JMenu menuOpcoes = new JMenu("Heurísticas");
 		menuBar.add(menuOpcoes);
-		
-		firstFit = new JRadioButtonMenuItem("First Fit");
+		ChangeListener l = new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				JRadioButtonMenuItem button = (JRadioButtonMenuItem) e.getSource();
+				if (button.isSelected()) {
+					for (int i = 0; i < menuOpcoes.getItemCount(); i++) {
+						JRadioButtonMenuItem m = (JRadioButtonMenuItem) menuOpcoes.getItem(i);
+						if (m != button) {
+							m.setSelected(false);
+						}
+					}
+				}
+			}
+		};
+		firstFit = new JRadioButtonMenuItem("First Fit", true);
+		firstFit.addChangeListener(l);
 		menuOpcoes.add(firstFit);
 
 		nextFit = new JRadioButtonMenuItem("Next Fit");
+		nextFit.addChangeListener(l);
 		menuOpcoes.add(nextFit);
-		
+
 		bestFit = new JRadioButtonMenuItem("Best Fit");
+		bestFit.addChangeListener(l);
 		menuOpcoes.add(bestFit);
 
 		worstFit = new JRadioButtonMenuItem("Worst Fit");
+		worstFit.addChangeListener(l);
 		menuOpcoes.add(worstFit);
 	}
-	
+
 	private void montaPainelPrincipal() {
 		painelPrincipal = new JPanel();
 		painelPrincipal.setLayout(new BorderLayout());
@@ -116,21 +134,26 @@ public class EscalonamentoUI {
 	private void escalonaEPlota(File file) throws FileNotFoundException {
 		List<List<Programa>> todosProgramas = new LeitorEntrada().carrega(new FileReader(file));
 		Plotter plotter = new Plotter(todosProgramas);
-		plotter.plotaIndicador(new ComComerciais(escolheEscalonador()));
+		Escalonador escalonador = escolheEscalonador();
+		plotter.plotaIndicador(new ComComerciais(escalonador));
 		plotter.criaGrafico("Escalonamento");
 		JPanel panel = plotter.getPanel();
-		abas.addTab("Escalonamento", panel);
+		abas.addTab("Escalonamento " + escalonador.getClass().getSimpleName(), panel);
 	}
-	
+
 	private Escalonador escolheEscalonador() {
-		if(firstFit.isSelected())
+		if(firstFit.isSelected()) {
 			return new FirstFit();
-		if(nextFit.isSelected())
+		}
+		if(nextFit.isSelected()) {
 			return new NextFit();
-		if(bestFit.isSelected())
+		}
+		if(bestFit.isSelected()) {
 			return new BestFit();
-		if(worstFit.isSelected())
+		}
+		if(worstFit.isSelected()) {
 			return new WorstFit();
+		}
 		return new FirstFit();
 	}
 
@@ -149,7 +172,7 @@ public class EscalonamentoUI {
 		abas = new JTabbedPane();
 		painelPrincipal.add(abas);
 	}
-	
+
 	private void mostraTudo() {
 		janelaPrincipal.pack();
 		janelaPrincipal.setSize(700, 550);
