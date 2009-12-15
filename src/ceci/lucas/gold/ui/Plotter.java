@@ -32,7 +32,7 @@ public class Plotter {
 	}
 
 	public void criaGrafico(String titulo){
-		this.grafico = ChartFactory.createStackedBarChart("Escalonamento",
+		this.grafico = ChartFactory.createStackedBarChart(titulo,
 												"Dias", "Horarios", 
 				dataset, PlotOrientation.HORIZONTAL, false, true, true);
 	}

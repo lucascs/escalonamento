@@ -13,13 +13,13 @@ public class LeitorEntrada {
 	@SuppressWarnings("unchecked")
 	public List<List<Programa>> carrega(FileReader leitor) {
 		Scanner entrada = new Scanner(leitor);
-		System.out.println("Digite o número de programas de manhã:");
+//		System.out.println("Digite o número de programas de manhã:");
 		List<Programa> manha = leProgramas(entrada);
 
-		System.out.println("Digite o número de programas de tarde:");
+//		System.out.println("Digite o número de programas de tarde:");
 		List<Programa> tarde = leProgramas(entrada);
 
-		System.out.println("Digite o número de programas de noite:");
+//		System.out.println("Digite o número de programas de noite:");
 		List<Programa> noite = leProgramas(entrada);
 		
 		return Arrays.asList(manha, tarde, noite);
