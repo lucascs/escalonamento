@@ -7,10 +7,10 @@ public class Gerador {
 
 	public static void main(String[] args) throws Exception {
 		Random random = new Random();
-		PrintStream stream = new PrintStream("teste2.txt");
+		PrintStream stream = new PrintStream("testeAleatorio.txt");
 
 		for(int i = 0; i < 3; i++) {
-			int n = random.nextInt(15) + 15;
+			int n = random.nextInt(5) + 25;
 			stream.println(n);
 			for (int j = 0; j < n; j++) {
 				stream.print(random.nextInt(VariaveisMagicas.MAXIMO_DE_TEMPO - 2) + 1);
