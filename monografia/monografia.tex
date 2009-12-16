@@ -1,0 +1,70 @@
+\documentclass[titlepage,a4paper]{article} 
+\usepackage{verbatim}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{hyperref}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{appendix}
+\usepackage{amsmath, amsthm, amssymb}
+\hypersetup{colorlinks=true,%
+	citecolor=red,%
+	linkcolor=red,%
+	urlcolor=blue,%
+	pdftex}
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+
+\newcommand{\opensource}{\textit{open source}}
+\newcommand{\software}{\textit{software}}
+\newcommand{\calopsita}{Calopsita}
+
+\title{Projeto de Escalonamento}
+\author{Cecilia Fernandes\\Lucas Cavalcanti dos Santos\\ \\Prof. Alfredo Goldman}
+
+\begin{document}
+	
+\lstset{language=Java,frame=ltrb,framesep=5pt,basicstyle=\footnotesize,
+  keywordstyle=\ttfamily\color{OliveGreen},
+ identifierstyle=\ttfamily\color{CadetBlue}\bfseries, 
+ commentstyle=\color{Brown},
+ stringstyle=\ttfamily,
+ showstringspaces=false,
+ showspaces=false,
+ tabsize=2}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\input{introducao}
+\newpage
+
+\input{motivacao}
+\newpage
+
+\input{heuristicas}
+\newpage
+
+\input{desenvolvimento}
+\newpage
+
+\input{outras-restricoes}
+\newpage
+
+\input{futuro}
+\newpage
+
+\input{conclusao}
+\newpage
+
+\input{bibliografia}
+\newpage
+
+\end{document}
