@@ -24,9 +24,11 @@ import javax.swing.event.ChangeListener;
 
 import ceci.lucas.gold.Programa;
 import ceci.lucas.gold.escalonador.BestFit;
+import ceci.lucas.gold.escalonador.BestFitDecreasing;
 import ceci.lucas.gold.escalonador.ComComerciais;
 import ceci.lucas.gold.escalonador.Escalonador;
 import ceci.lucas.gold.escalonador.FirstFit;
+import ceci.lucas.gold.escalonador.FirstFitDecreasing;
 import ceci.lucas.gold.escalonador.NextFit;
 import ceci.lucas.gold.escalonador.WorstFit;
 import ceci.lucas.gold.leitor.LeitorEntrada;
@@ -39,11 +41,13 @@ public class EscalonamentoUI {
 	private JTabbedPane abas;
 	private JRadioButtonMenuItem nextFit;
 	private JRadioButtonMenuItem bestFit;
+	private JRadioButtonMenuItem bestFitDec;
 	private JRadioButtonMenuItem worstFit;
 	private JRadioButtonMenuItem firstFit;
+	private JRadioButtonMenuItem firstFitDec;
 	private JCheckBoxMenuItem comComerciais;
-	
-	
+
+
 	public static void main(String[] args) {
 		new EscalonamentoUI().montaTela();
 	}
@@ -87,6 +91,10 @@ public class EscalonamentoUI {
 		firstFit.addChangeListener(l);
 		menuHeuristicas.add(firstFit);
 
+		firstFitDec = new JRadioButtonMenuItem("First Fit Decreasing", true);
+		firstFitDec.addChangeListener(l);
+		menuHeuristicas.add(firstFitDec);
+
 		nextFit = new JRadioButtonMenuItem("Next Fit");
 		nextFit.addChangeListener(l);
 		menuHeuristicas.add(nextFit);
@@ -95,13 +103,17 @@ public class EscalonamentoUI {
 		bestFit.addChangeListener(l);
 		menuHeuristicas.add(bestFit);
 
+		bestFitDec = new JRadioButtonMenuItem("Best Fit Decreasing");
+		bestFitDec.addChangeListener(l);
+		menuHeuristicas.add(bestFitDec);
+
 		worstFit = new JRadioButtonMenuItem("Worst Fit");
 		worstFit.addChangeListener(l);
 		menuHeuristicas.add(worstFit);
-		
+
 		final JMenu menuRestricoes = new JMenu("Restrições");
 		menuBar.add(menuRestricoes);
-		
+
 		comComerciais = new JCheckBoxMenuItem("Com comerciais", true);
 		menuRestricoes.add(comComerciais);
 	}
@@ -159,11 +171,17 @@ public class EscalonamentoUI {
 		if(firstFit.isSelected()) {
 			return new FirstFit();
 		}
+		if(firstFitDec.isSelected()) {
+			return new FirstFitDecreasing();
+		}
 		if(nextFit.isSelected()) {
 			return new NextFit();
 		}
 		if(bestFit.isSelected()) {
 			return new BestFit();
+		}
+		if(bestFitDec.isSelected()) {
+			return new BestFitDecreasing();
 		}
 		if(worstFit.isSelected()) {
 			return new WorstFit();

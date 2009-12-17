@@ -19,6 +19,86 @@ Uma característica importante de heurísticas é que elas tomam decisões espec
 ponto do algoritmo. Por exemplo escolher o maior item, inverter a ordem de itens da solução, etc.
 
 Para conseguir uma solução aproximada para o problema \textit{Bin-packing} podemos utilizar várias heurísticas.
-Algumas delas serão explicadas a seguir.
+Algumas delas foram implementadas e rodadas com a mesma entrada.
 
+\subsection{First Fit}
+
+O \textit{First Fit} coloca o item no primeiro bin em que ele cabe. No caso do problema da grade de programação,
+o programa é colocando no primeiro dia em que ele cabe. Caso o programa não caiba em nenhum dos dias, é criado
+um novo dia.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{first-fit.png}
+  }
+  \caption{Resolução de um problema usando o First Fit}
+\end{figure}
+
+\subsection{First Fit Decreasing}
+
+O \textit{First Fit Decreasing} é uma variação do First Fit em que os itens são ordenados em ordem decrescente
+de valor antes de rodar o algoritmo. Essa heurística só pode ser usada se todos os itens forem conhecidos de
+antemão.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{first-fit-dec.png}
+  }
+  \caption{Resolução de um problema usando o First Fit Decreasing}
+\end{figure}
+
+\subsection{Next Fit}
+
+O \textit{Next Fit} tenta preencher um bin usando o primeiro item que caiba, se nenhum programa couber, um
+novo bin é criado. A principal diferença entre o \textit{Next Fit} e o \textit{First Fit} é que no primeiro
+é preenchido um bin por vez e no segundo tenta-se colocar o item no primeiro bin que ele caiba.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{first-fit.png}
+  }
+  \caption{Resolução de um problema usando o Next Fit}
+\end{figure}
+
+\subsection{Best Fit}
+
+O \textit{Best Fit} tenta colocar o item no bin em que, após colocar o item, sobre o mínimo de espaço restante
+no bin. Caso não caiba em nenhum bin, é criado um novo.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{best-fit.png}
+  }
+  \caption{Resolução de um problema usando o Best Fit}
+\end{figure}
+
+\subsection{Best Fit Decreasing}
+
+O \textit{Best Fit Decreasing} é uma variação do \textit{Best Fit} em que os itens são ordenados em ordem
+decrescente de valor antes de rodar o Algoritmo.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{best-fit-dec.png}
+  }
+  \caption{Resolução de um problema usando o Best Fit Decreasing}
+\end{figure}
+
+\subsection{Worst Fit}
+
+O \textit{Worst Fit} tenta colocar o item no bin em que, após colocar o item, sobre o máximo de espaço restante
+no bin. Caso não caiba em nenhum bin, é criado um novo.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=110mm]{worst-fit.png}
+  }
+  \caption{Resolução de um problema usando o Worst Fit}
+\end{figure}
 
