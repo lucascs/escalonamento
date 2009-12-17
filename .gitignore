@@ -2,3 +2,7 @@
 bin/
 testeAleatorio.txt
 *~
+*.aux
+*.log
+*.out
+*.toc
