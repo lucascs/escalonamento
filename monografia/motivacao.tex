@@ -1,3 +1,58 @@
 \section{Motivação}
 
-Motivação para codar, personagens e problema mais simples 
+Como já havia muitos trabalhos teóricos e achamos importante e motivante (além de gostarmos de código) implementar os algoritmos e vê-los rodando na prática, optamos por criar um  sistema simples que conseguisse ler uma entrada e mostrar o escalonamento de forma simples e clara.
+
+Contudo, antes de começar o código, sentimos a necessidade de focar o projeto em um problema menor e mais definido que, embora provenha uma boa guia para a implementação, não limita o projeto à resolução específica desse cenário.
+
+De forma a tornar ainda mais fácil o entendimento do problema, criamos personagens, cada um com suas preferências de horários e programação.
+
+
+\subsection{Os personagens}
+
+Temos uma família de três pessoas com perfis bem específicos:
+
+\begin{itemize}
+	\item{uma criança que assiste TV de manhã, preferencialmente desenhos e programas infantis, estuda à tarde e dorme cedo;}
+	\item{uma esposa que, de manhã, faz ginástica e trabalho voluntário e de tarde assiste TV, principalmente programas femininos e seriados;}
+	\item{um marido que trabalha o dia inteiro, chega a noite em casa e gosta de assistir notícias e esportes, principalmente futebol.}
+\end{itemize}
+
+Esses personagens têm uma televisão e alguns problemas de escalonamento surgem de seus desejos ou para sua conveniência.
+
+\subsection*{Problema: Montagem da grade de canais}
+
+\textit{``Com as preferências de programa e horário, os canais de TV organizam seus programas, de modo que melhor atendam às necessidades da família.''}
+
+\vspace{1.5em}
+
+\textbf{Modelagem:} {\large $(P_{\infty} | p_j, r_j, d_j | \sum_{j} U_j )$ }
+
+\vspace{1.5em}
+
+Todos os programas têm \textit{release date} ($r_j$) e \textit{due date} ($d_j$) dentro de períodos bem definidos, de acordo com sua categoria: 
+
+\begin{itemize}
+	\item{programas infantis, desenhos: $r_j=6h$ e $d_j=12h$}
+	\item{programas femininos: $r_j=12h$ e $d_j=18h$}
+	\item{séries, notícias e esportes: $r_j=18h$ e $d_j=24h$}
+\end{itemize}
+
+Os programas têm tamanhos variados, informados na entrada, e cada máquina representa um dia da semana/mês. Com um escalonamento, podemos gerar a grade de programação de vários dias.
+
+Nesse problema, não há preempção dos programas, isto é, eles não podem começar em um dia e terminar em outro ou mesmo começar em um período e terminar em outro. Assim, sobra tempo ocioso da emissora no final de um dia.
+
+A fim de evitar essa sobra dispendiosa de tempo em um dia, em vez de adicionar a preempção, que não traria nenhum desafio e cujo algoritmo trivial dá solução ótima, decidimos por espalhar, na programação, intervalos comerciais.
+
+\subsection*{Problema: Montagem da grade de canais com intervalos comerciais}
+
+\begin{quote}
+	\textit{``Dada essa grade, em vez de deixar tempo sobrando, quero ganhar dinheiro com comerciais espalhados pela programação. Se não tiver nada pra passar num período inteiro, quero vender esse período para programação especializada de vendas.''}
+\end{quote}
+
+A modelagem desse problema é exatamente a mesma do problema anterior, mas a resolução exige uma nova heurística que considere essa restrição. A forma como isso foi implementado, ela pode ser usada com qualquer outro escalonamento que se crie. 
+
+A restrição está acessível, no \textit{software}, como segundo ítem do menu superior e, no gráfico exibido, pode-se descobrir o que é comercial e o que é programa colocando o \textit{mouse} sobre o intervalo de uma cor: ele mostrará a legenda que indica se é um programa ou um comercial.
+
+Via de regra, o comercial é indentificável por seu tamanho, menor do que o programa -- faz-se exceção aos programas extremamente curtos.
+
+
