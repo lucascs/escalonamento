@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ceci.lucas.gold.Programa;
+import ceci.lucas.gold.escalonador.AlmostWorstFit;
 import ceci.lucas.gold.escalonador.BestFit;
 import ceci.lucas.gold.escalonador.BestFitDecreasing;
 import ceci.lucas.gold.escalonador.ComComerciais;
@@ -42,6 +43,7 @@ public class EscalonamentoUI {
 	private JRadioButtonMenuItem nextFit;
 	private JRadioButtonMenuItem bestFit;
 	private JRadioButtonMenuItem bestFitDec;
+	private JRadioButtonMenuItem almostWorstFit;
 	private JRadioButtonMenuItem worstFit;
 	private JRadioButtonMenuItem firstFit;
 	private JRadioButtonMenuItem firstFitDec;
@@ -106,6 +108,10 @@ public class EscalonamentoUI {
 		bestFitDec = new JRadioButtonMenuItem("Best Fit Decreasing");
 		bestFitDec.addChangeListener(l);
 		menuHeuristicas.add(bestFitDec);
+
+		almostWorstFit = new JRadioButtonMenuItem("Almost Worst Fit");
+		almostWorstFit.addChangeListener(l);
+		menuHeuristicas.add(almostWorstFit);
 
 		worstFit = new JRadioButtonMenuItem("Worst Fit");
 		worstFit.addChangeListener(l);
@@ -185,6 +191,9 @@ public class EscalonamentoUI {
 		}
 		if(worstFit.isSelected()) {
 			return new WorstFit();
+		}
+		if(almostWorstFit.isSelected()) {
+			return new AlmostWorstFit();
 		}
 		return new FirstFit();
 	}
