@@ -1,1 +1,69 @@
 \section{O programa}
+
+Para que a implementação das heurísticas vá além do problema proposto e alcance diversos outros problemas da área de escalonamento, tomamos algumas decisões que deixaram o código particularmente fácil de estender.
+
+\subsection{Tecnologias usadas}
+
+Para o desenvolvimento desse programa, foi escolhida a linguagem de programação Java, amplamente difundida no mercado e também no meio acadêmico e, para a interface gráfica, foi usado Swing. 
+
+Na geração de gráficos para mostrar os escalonamentos, utilizamos a biblioteca \textit{open source} JFreeChart, que gera gráficos de forma bastante simples e provê vantagens como \textit{zoom} e legendas já por padrão.
+
+\subsection{Gerador de entradas aleatórias}
+
+O sistema conta com uma classe chamada \texttt{Gerador} que, quando rodada, cria no arquivo \texttt{testeAleatorio.txt} uma entrada (quase) aleatória para o problema proposto.
+
+Isso nos ajudou a verificar semelhanças e diferenças entre heurísticas variadas e notar que, para algumas instâncias, as heurísticas chegam a um mesmo resultado apenas por coincidência. Nos poupou bastante tempo de correção de supostos \textit{bugs} que, na verdade, não existiam.  
+
+\subsection{Flexibilidade} 
+
+Criar um novo escalonador, isto é, passar para código o algoritmo relacionado à uma nova heurística, meta-heurística ou restrição, é bastante simples nesse sistema.
+
+Basta que o desenvolvedor implemente a interface \texttt{Escalonador} e adicione ao menu correto, a opção que o chama.
+
+Compondo heurísticas, uma nova delas pode ser usada com qualquer outro escalonamento que se crie. Ela é apenas um Decorador~\footnote{Decorator -- Design Patterns (GOF)} que recebe um outro escalonador base. 
+
+Cada escalonador, por sua vez, é uma Estratégia~\footnote{Strategy -- Design Patterns (GOF)} para lidar com as listas de programas por períodos.
+
+Usando esses padrões de projeto, a arquitetura do sistema se manteve simples, mas ganhou uma enorme flexibildade, excelente para implementar variações simples de um algoritmo e expor a diferença na forma de gráficos coloridos.
+
+\subsection{Exemplo prático}
+
+Se quiséssemos implementar a meta-heurística \textit{Simulated Annealing} no sistema, bastaria que criássemos uma classe na seguinte forma:
+
+\vspace{1em}
+
+\begin{lstlisting}
+/**
+ * Meta-heuristica: que simula processos industriais de metalurgia 
+ * 					usados para rearranjar partículas
+ */
+public class SimulatedAnnealing implements Escalonador {
+
+	public Escalonamento escalona(List<Programa> periodo) {
+		//
+		// faz o algoritmo aqui...
+		//
+		return new Escalonamento(escalonado);
+	}
+}
+\end{lstlisting}
+
+\vspace{1em}
+
+E um ítem a mais no menu de heurísticas:
+
+\vspace{1em}
+
+\begin{lstlisting}
+	private Escalonador escolheEscalonador() {
+
+		// outros escalonadores...
+
+		if(simulatedAnnealing.isSelected()) {
+			return new SimulatedAnnealing();
+		}
+		return new FirstFit();
+	}
+\end{lstlisting}
+
+Rodando a aplicação, o novo ítem apareceria no menu e, ao selecioná-lo e escolher o arquivo de entrada, o escalonamento utilizando \textit{Simulated Annealing} apareceria na tela em poucos momentos.
