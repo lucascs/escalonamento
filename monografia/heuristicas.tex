@@ -1,3 +1,24 @@
 \section{Heurísticas}
 
-As que foram implementadas e uma explicação sobre cada uma delas.
+%As que foram implementadas e uma explicação sobre cada uma delas.
+
+O problema de escalonar programas em uma grade de programação de uma emissora de TV a cabo é um caso
+particular de um problema bastante conhecido de teoria da combinatória, e que também pode ser visto
+como um problema de escalonamento: o \textit{Bin-packing}.
+
+Esse problema é conhecidamente NP-difícil, então não é possível conseguir a solução ótima em um tempo
+razoável. Por causa disso, ao invés de tentarmos descobrir a solução ótima, temos que ir atrás de uma
+solução que é apenas satisfatória, uma aproximação. Para conseguir uma aproximação precisamos usar
+heurísticas.
+
+Heurísticas são algoritmos de aproximação, ou seja, algoritmos que não buscam encontrar a solução ótima,
+mas uma solução que consiga se aproximar da ótima segundo algum fator. Esse fator é a razão entre
+a solução aproximada e a ótima, significando o quão boa é a aproximação.
+
+Uma característica importante de heurísticas é que elas tomam decisões específicas quando chegam em determinado
+ponto do algoritmo. Por exemplo escolher o maior item, inverter a ordem de itens da solução, etc.
+
+Para conseguir uma solução aproximada para o problema \textit{Bin-packing} podemos utilizar várias heurísticas.
+Algumas delas serão explicadas a seguir.
+
+
