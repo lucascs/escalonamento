@@ -1,1 +1,20 @@
 \section{Conclusão}
+
+Ao implementar várias heurísticas, conseguimos ver que heurísticas diferentes levavam a escalonamentos
+diferentes, para uma mesma entrada. Apesar disso, duas heurísticas estão gerando o mesmo resultado, para
+várias das entradas testadas.
+
+Essas heurísticas problemáticas são a \textit{First Fit} e a \textit{Next Fit}. Elas são bastante parecidas,
+mas uma foca em tentar preencher um bin por vez, colocando o primeiro item que cabe, e a outra em colocar um 
+item por vez, no primeiro bin que cabe. Uma explicação possível é que, pela característica do problema e dos
+limites para o tamanho do item, no máximo dois bins ficam abertos, o que faz com que essas duas heurísticas
+ficam equivalentes. Uma outra explicação é que a nossa implementação esteja incorreta, mas não conseguimos
+encontrar algo que indique isso -- o algoritmo parece estar de acordo com a especificação da heurística.
+
+Ao analisar os resultados das heurísticas, a \textit{Best Fit} pareceu apresentar melhores resultados.
+Melhor no sentido que minimizou o tempo gasto com comerciais, levando em conta que pelo menos um tempo de comercial
+deveria acontecer entre dois programas. Uma explicação razoável para esse fato é que como esse algoritmo tenta
+deixar o menor espaço vago possível no período em que ele coloca um programa, o período tende a ter menos programas
+que quando utilizamos outras heurísticas. Como o fato do comercial ser obrigatório entre dois programas, é bom
+que tenha menos programas em um período, então o \textit{Best Fit} parece ser a melhor opção de heurística
+para o problema.
